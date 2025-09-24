@@ -1,0 +1,1 @@
+Copy the folder for the morning warmup into your Exercises folder and then open it up in IntelliJ to complete this mornings warmup.
