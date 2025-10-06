@@ -13,7 +13,7 @@ public class Book {
     //getters and setters
 
     //check in and check out methods
-    public void checkIn(){
+    public void checkIn(String name){
 
     }
 
