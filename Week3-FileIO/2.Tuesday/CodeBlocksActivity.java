@@ -19,8 +19,8 @@ public class CodeBlocksActivity {
         }
 
         //Why won't lines 22 and 23 compile?
-        System.out.println(ifBlockVariable);
-        System.out.println(forLoopVariable);
+        //System.out.println(ifBlockVariable);
+        //System.out.println(forLoopVariable);
 
         anotherMethod();
     }
