@@ -1,23 +1,34 @@
 package org.example;
 
-//Here is an outline of what should go in your book class
-//There should NOT be any code that deals with menus
-//There should NOT be any code that takes in user input
-//All this class cares about is book data
-//and what to do when the book is checked in or out, that's it
 public class Book {
-    //properties
+    private int id;
+    private String isbn;
+    private String title;
+    private boolean isCheckedOut;
+    private String checkedOutTo;
 
-    //constructor
-
-    //getters and setters
-
-    //check in and check out methods
-    public void checkIn(String name){
-
+    public Book(int id, String isbn, String title, boolean isCheckedOut, String checkedOutTo) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.isCheckedOut = isCheckedOut;
+        this.checkedOutTo = checkedOutTo;
     }
 
-    public void checkOut(){
+    // Getters and Setters
+    public int getId() { return id; }
+    public String getIsbn() { return isbn; }
+    public String getTitle() { return title; }
+    public boolean isCheckedOut() { return isCheckedOut; }
+    public String getCheckedOutTo() { return checkedOutTo; }
 
+    public void checkOut(String name) {
+        this.isCheckedOut = true;
+        this.checkedOutTo = name;
+    }
+
+    public void checkIn() {
+        this.isCheckedOut = false;
+        this.checkedOutTo = "";
     }
 }
