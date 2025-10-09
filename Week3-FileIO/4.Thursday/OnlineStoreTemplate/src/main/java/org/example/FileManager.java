@@ -10,6 +10,7 @@ import java.util.List;
 public class FileManager {
     //The reason these are static is so that you can directly
     //call the method like FileManager.getProducts()
+    //Notice the capital F
     public static List<Product> getProducts(){
         //You are going to write code to read the products
         //from the file, put them in a list and return them
