@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.List;
+
 public class Reservation {
     private String roomType;
     private int numberOfNights;
@@ -51,5 +53,9 @@ public class Reservation {
         else{
             return getPrice() * numberOfNights;
         }
+    }
+
+    public void filterBelowThreshold(List<Integer> integerList, int threshold){
+
     }
 }
