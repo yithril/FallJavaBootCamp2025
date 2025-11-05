@@ -68,4 +68,16 @@ public class Person {
     public String getFullName(){
         return this.firstName + " " + this.lastName;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", profession='" + profession + '\'' +
+                ", state='" + state + '\'' +
+                ", yearlyIncome=" + yearlyIncome +
+                '}';
+    }
 }
