@@ -8,6 +8,11 @@ public class Main {
                 .addMushrooms()
                 .build();
 
+        Pizza pizza2 = new Pizza.Builder("Small", "Deep Dish")
+                .addMushrooms()
+                .addPepperoni()
+                .build();
+
         System.out.println(pizza);
     }
 }
