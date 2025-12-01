@@ -1,0 +1,23 @@
+p {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+/* Targeting by id you use # */
+#firstTag {
+ color:burlywood
+}
+
+/*Target by class you use . */
+
+.blueBackground {
+    background-color: blue;
+}
+
+.yellowText {
+    color:yellow
+}
+
+button:hover {
+    background-color: red;
+}
