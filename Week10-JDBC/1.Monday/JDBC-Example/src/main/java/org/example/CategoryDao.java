@@ -5,6 +5,7 @@ import com.mysql.cj.protocol.Resultset;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //This class is responsible for talking
 //to the database
@@ -56,5 +57,117 @@ public class CategoryDao {
         }
 
         return categories;
+    }
+
+    //Get a category by a specific id
+    //getXById
+    public Optional<Category> getCategoryById(int id){
+        String sqlQuery = "SELECT * FROM categories WHERE CategoryID = ?";
+
+        try(Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)){
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                int categoryId = rs.getInt("CategoryID");
+                String categoryName = rs.getString("CategoryName");
+                String description = rs.getString("Description");
+
+                //Take your category and put it inside the optional box
+                return Optional.of(new Category(categoryId, categoryName, description));
+            }
+        }
+        catch(SQLException ex){
+            System.out.println("There was a problem with the database");
+            ex.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    //C in CRUD
+    //createX
+    /*
+    INSERT INTO categories(CategoryName, Description)
+    VALUES('Electronics', 'Electronics and cool devices');
+    */
+    public Category createCategory(Category category){
+        String sqlQuery = "INSERT INTO categories(CategoryName, Description) VALUES(?, ?)";
+
+        try(Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)){
+            PreparedStatement ps = conn.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, category.getCategoryName());
+            ps.setString(2, category.getDescription());
+
+            //Execute Update is when you do Inserts or Updates
+            int affectedRows = ps.executeUpdate();
+
+            //If the number we get back is 0, it means our insert failed
+            if(affectedRows > 0){
+                try(ResultSet generatedKeys = ps.getGeneratedKeys()){
+                    if(generatedKeys.next()){
+                        category.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
+
+        }
+        catch(SQLException ex){
+            System.out.println("There was a problem with the database");
+            ex.printStackTrace();
+        }
+
+        return category;
+    }
+
+    //UPDATE U in CRUD
+    //EXAMPLE:
+    /*
+    UPDATE categories
+    SET Description = 'Electronics are really cool'
+    WHERE CategoryID = 15;
+     */
+    public Category updateCategory(Category category){
+        String sqlQuery = "UPDATE categories SET Description = ? WHERE CategoryID = ?";
+
+        try(Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)){
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+
+            ps.setString(1, category.getDescription());
+            ps.setInt(2, category.getId());
+
+            ps.executeUpdate();
+        }
+        catch(SQLException ex){
+            System.out.println("There was a problem with the database");
+            ex.printStackTrace();
+        }
+
+        return category;
+    }
+
+    /*
+    Example:
+    DELETE FROM categories
+    WHERE CategoryID = 15;
+     */
+    public void deleteCategory(int id){
+        String sqlQuery = "DELETE FROM categories WHERE CategoryID = ?";
+
+        try(Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass)){
+            PreparedStatement ps = conn.prepareStatement(sqlQuery);
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+        }
+        catch(SQLException ex){
+            System.out.println("There was a problem with the database");
+            ex.printStackTrace();
+        }
     }
 }
