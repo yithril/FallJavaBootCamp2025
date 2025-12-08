@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class DealershipFileManager {
+public class DealershipFileManager implements DealershipManager {
     private final String FILE_PATH = "src/main/resources/vehicles.csv";
 
     public Dealership getDealership() {
