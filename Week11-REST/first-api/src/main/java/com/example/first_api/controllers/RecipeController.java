@@ -1,7 +1,10 @@
 package com.example.first_api.controllers;
 
+import com.example.first_api.dto.CreateRecipeDto;
+import com.example.first_api.dto.UpdateRecipeDto;
 import com.example.first_api.models.Recipe;
 import com.example.first_api.services.RecipeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +32,22 @@ public class RecipeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Recipe>> getAllRecipes(){
+    public ResponseEntity<List<Recipe>> getAllRecipes(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String instructions
+    ){
+        if(name != null){
+            var searchRecipes = this.recipeService.searchRecipe(name);
+
+            return new ResponseEntity<>(searchRecipes, HttpStatus.OK);
+        }
+
+        if(instructions != null){
+            var searchRecipes = this.recipeService.searchRecipeByInstructions(instructions);
+
+            return new ResponseEntity<>(searchRecipes, HttpStatus.OK);
+        }
+
         var recipes = this.recipeService.getAllRecipes();
 
         //We need to return the recipes in JSON format with a status code
@@ -62,5 +80,25 @@ public class RecipeController {
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Recipe> createRecipe(@RequestBody @Valid CreateRecipeDto dto){
+        var recipe = this.recipeService.createRecipe(dto);
+
+        //The code for successful creation is 201
+        return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody @Valid UpdateRecipeDto dto,
+                                               @PathVariable Long id){
+        var recipe = this.recipeService.updateRecipe(dto, id);
+
+        if(recipe == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(recipe, HttpStatus.OK);
     }
 }
