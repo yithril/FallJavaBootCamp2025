@@ -29,14 +29,11 @@ public class RecipeService {
     }
 
     public boolean deleteRecipe(Long id){
-        Optional<Recipe> recipe = recipeRepository.findById(id);
-
-        if(recipe.isPresent()){
-            recipeRepository.delete(recipe.get());
-            return true;
-        }
-        else{
+        if (!recipeRepository.existsById(id)) {
             return false;
         }
+
+        recipeRepository.deleteById(id);
+        return true;
     }
 }
