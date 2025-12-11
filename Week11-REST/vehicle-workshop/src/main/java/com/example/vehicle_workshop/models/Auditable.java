@@ -1,4 +1,4 @@
-package com.example.first_api.models;
+package com.example.vehicle_workshop.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -24,6 +23,10 @@ public abstract class Auditable {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
